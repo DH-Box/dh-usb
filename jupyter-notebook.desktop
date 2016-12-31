@@ -1,0 +1,12 @@
+[Desktop Entry]
+Comment=Jupyter Notebook
+Exec=jupyter notebook
+GenericName[en_US]=Jupyter Notebook
+GenericName=Jupyter Notebook
+Icon=ipython
+Name[en_US]=Jupyter Notebook
+Name=Jupyter Notebook
+Categories=Development;Utility;
+StartupNotify=false
+Terminal=true
+Type=Application

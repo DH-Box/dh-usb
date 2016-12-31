@@ -1,0 +1,9 @@
+# 
+# /etc/fstab: static file system information
+#
+# <file system>	<dir>	<type>	<options>	<dump>	<pass>
+# /dev/sdb2 UUID=d0b751a1-74ca-4190-8f23-31e9504ccab0
+/dev/sdb2           	/         	ext4      	rw,relatime,block_validity,delalloc,barrier,user_xattr,acl	0 1
+
+# /dev/sdb1 UUID=D063-338B
+/dev/sdb1           	/boot     	vfat      	rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro	0 2
