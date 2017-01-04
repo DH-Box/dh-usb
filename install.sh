@@ -6,9 +6,6 @@
 # Stop on errors. 
 set -e 
 
-# Put your username here. 
-user=jon 
-
 # Enter the label for your USB drive here. 
 disk=/dev/sdb
 
@@ -93,9 +90,9 @@ function extra {
 	# issues. 
 	for package in $aur
 	do
-		sudo -u $user git clone https://aur.archlinux.org/$package.git /tmp/$package
+		sudo -u $SUDO_USER git clone https://aur.archlinux.org/$package.git /tmp/$package
 		cd /tmp/$package
-		sudo -u $user makepkg -src 
+		sudo -u $SUDO_USER makepkg -src 
 		pkgfile=`ls $package*.pkg.tar`
 		mv /tmp/$package/$pkgfile /mnt/home/dh-usb/
 		arch-chroot /mnt chown root:root /home/dh-usb/$pkgfile
