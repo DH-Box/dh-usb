@@ -176,13 +176,6 @@ function clean {
 	done
 } 
 
-function install_r { 
-	# Must be run first if you want to install R and associated packages. 
-	dh="$dh r"
-	aur="$aur rstudio-desktop-bin" 
-	desktop_files="$desktop_files r rstudio"
-} 
-
 function all { 
 	# install_r
 	partition
