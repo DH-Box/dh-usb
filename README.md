@@ -15,8 +15,12 @@ DH-USB is a version of Arch Linux customized for use by digital humanists, data 
 This is a work-in-progress! Please do not use these scripts unless you know what you’re doing. 
 
 #Prerequisites 
+For this script to work, you must have: 
+
  - a large USB drive, maybe over 10GB. This hasn’t been tested with anything but a 32GB drive
  - a modern x86_64 system that supports UEFI. Legacy boot may be possible, but it hasn’t been tested. 
+ - Antergos Linux, or Arch Linux with the Antergos repositories in /etc/pacman.conf 
+ - the Arch Linux package arch-install-scripts
 
 #Usage
 Figure out what device label your USB drive has with `sudo fdisk -l`. If it’s `/dev/sdb`, you don’t need to configure anything, but if it’s something else, like `/dev/sdc`, you’ll need to edit the script first. Once you’re absolutely sure that your disk label is correct, you can run this command, which will erase and partition your disk, install Arch and all the other software, and configure everything: 
