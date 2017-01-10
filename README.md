@@ -1,6 +1,16 @@
 #About
 DH-USB is a version of Arch Linux customized for use by digital humanists, data scientists, corpus linguists, and anyone else that works with text as data. This script will install DH-USB persistently to your USB drive, allowing you to run the operating system directly from the disk. The storage available to your system is limited only by the size of your USB drive. 
 
+##Software Included
+ - **Desktop Environment**: GNOME
+ - **Programming Languages**: Python 3, R, Ruby 
+ - **Text Editors**: Vim, Gedit
+ - **IDEs**: Jupyter, Jupyter Notebooks, iPython, R-Studio
+ - **Web Browsing**: Chromium (open-source Google chrome)  
+ - **Web Development**: Jekyll
+ - **Document management**: Pandoc, pandoc-citeproc, pandoc-crossref
+ - **Bibliographic Management**: Zotero
+
 #Warning
 This is a work-in-progress! Please do not use these scripts unless you know what you’re doing. 
 
