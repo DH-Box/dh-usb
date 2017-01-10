@@ -122,8 +122,20 @@ function install_extra {
 	echo "Installing Ruby gems." 
 	arch-chroot /mnt sudo -u dh-usb gem install -u $ruby_gems
 
-	# TODO: Install Python modules
+} 
+
+function install_big { 
+	# NLTK "Book" Data is that which is needed to follow along with nltk.org/book
 	arch-chroot /mnt python -m nltk.downloader -d /usr/local/share/nltk_data book
+
+	# Install Pandas, Numpy, Scikit-learn, Etc. 
+	pacstrap /mnt python-pandas python-numpy python-scikit-learn python-virtualenv python-virtualenvwrapper
+
+	# Install spaCy
+	arch-chroot /mnt pip install spacy
+
+	# Install spaCy data
+	arch-chroot /mnt python -m spacy.en.download all
 } 
 
 function files { 
