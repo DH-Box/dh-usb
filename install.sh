@@ -113,6 +113,7 @@ function install_extra {
 	arch-chroot /mnt sudo -u dh-usb gem install -u $ruby_gems
 
 	# TODO: Install Python modules
+	arch-chroot /mnt python -m nltk.downloader -d /usr/local/share/nltk_data book
 } 
 
 function files { 
