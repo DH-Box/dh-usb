@@ -41,6 +41,7 @@ function partition() {
 	parted $disk mkpart primary fat32 1MiB 513MiB
 	parted $disk set 1 boot on
 	parted $disk mkpart primary ext4 513MiB 100%
+	# Disable journaling to lengthen life of USB disk by minimizing writes. 
 	mkfs.ext4 -O "^has_journal" "$disk"2
 	mkfs.fat -F32 "$disk"1
 }
