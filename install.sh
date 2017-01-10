@@ -9,7 +9,9 @@ set -e
 # Enter the label for your USB drive here. 
 disk=/dev/sdb
 
-sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect clonezilla openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool irssi b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau virtualbox-guest-modules-arch virtualbox-guest-utils xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-server-utils xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot" 
+dir=$PWD
+
+sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau virtualbox-guest-modules-arch virtualbox-guest-utils xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-server-utils xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot" 
 
 fonts="divehi-fonts ttf-aboriginal-sans ttf-arphic-uming ttf-baekmuk ttf-bitstream-vera ttf-dejavu ttf-freefont ttf-opensans" 
 
