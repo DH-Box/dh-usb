@@ -23,7 +23,17 @@ ruby_gems="jekyll"
 
 aur="papirus-icon-theme-git zotero" 
 
-desktop_files="jupter-notebook zotero" 
+# The files jupyter-notebook.desktop and zotero.desktop don't have 
+# icons that look good in the current theme, so this hack replaces them. 
+desktop_files="jupyter-notebook zotero" 
+
+function install_r { 
+	# Optional. 
+	# Must be run first if you want to install R and associated packages. 
+	dh="$dh r"
+	aur="$aur rstudio-desktop-bin" 
+	desktop_files="$desktop_files r rstudio"
+} 
 
 function partition() { 
 	echo "Partitioning $disk!"
