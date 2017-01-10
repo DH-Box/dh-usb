@@ -24,28 +24,19 @@ if [[ *'[]'* = "${_current_val}" ]]; then
 fi
 
 # Enabled extensions
-_extensions="['user-theme@gnome-shell-extensions.gcampax.github.com', 'status-menu-buttons@dev.antergos.com', 'dash-to-dock@micxgx.gmail.com', 'panel-osd@berend.de.schouwer.gmail.com', 'topIcons@adel.gadllah@gmail.com']"
+_extensions="['user-theme@gnome-shell-extensions.gcampax.github.com', 'dash-to-dock@micxgx.gmail.com']"
 gsettings set org.gnome.shell enabled-extensions "${_extensions}"
-
-# Extension - Panel-OSD Settings
-gsettings set org.gnome.shell.extensions.panel-osd x-pos 96.0
-gsettings set org.gnome.shell.extensions.panel-osd y-pos 96.0
-gsettings set org.gnome.shell.extensions.panel-osd force-expand true
 
 # Extension - dash-to-dock Settings
 gsettings set org.gnome.shell.extensions.dash-to-dock apply-custom-theme false
 gsettings set org.gnome.shell.extensions.dash-to-dock opaque-background true
-gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.5
+gsettings set org.gnome.shell.extensions.dash-to-dock background-opacity 0.8
 gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots false
 gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink false
+gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize
 
 # Set favorite apps
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'chromium.desktop', 'org.gnome.Nautilus.desktop']"
-
-# Disable screensaver
-#gsettings set org.gnome.desktop.screensaver lock-enabled false
-#gsettings set org.gnome.desktop.lockdown disable-lock-screen true
-#gsettings set org.gnome.desktop.session idle-delay 0
 
 # Set theme
 gsettings set org.gnome.desktop.interface gtk-theme 'Arc-Dark'
