@@ -183,6 +183,7 @@ function all {
 	install
 	config_init
 	install_extra
+	# install_big
 	files
 	config_post
 	clean
