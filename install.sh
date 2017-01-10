@@ -89,7 +89,7 @@ function install_extra {
 	echo "Installing extra packages from the AUR" 
 	# Install packages from AUR
 	# It'd be great if this worked with `yaourt`,  but there are permissions
-	# issues. 
+	# issues, so we have to do this the long way. 
 	for package in $aur
 	do
 		sudo -u $SUDO_USER git clone https://aur.archlinux.org/$package.git /tmp/$package
@@ -127,12 +127,6 @@ function files {
 	arch-chroot /mnt chown root:root /etc/sudoers.d/wheel
 	arch-chroot /mnt chmod -c 0440 /etc/sudoers.d/wheel
 
-	# Copy GNOME config. 
-	DEST=/home/dh-usb/config/gtk-3.0
-	arch-chroot /mnt sudo -u dh-usb mkdir -p $DEST
-	cp gtk-settings.ini /mnt$DEST/settings.ini
-	arch-chroot /mnt chown dh-usb:users $DEST/settings.ini
-
 	# Copy over desktop files. 
 	DEST=/home/dh-usb/.local/share/applications/
 	arch-chroot /mnt sudo -u dh-usb mkdir -p $DEST
@@ -149,7 +143,6 @@ function config_post {
 } 
 
 function clean { 
-	# Remove 
 	# Remove arguably unnecessarily desktop files so that the list of applications 
 	for file in avahi-discover bssh bvnc qv4l2
 	do 
