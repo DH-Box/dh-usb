@@ -3,9 +3,9 @@ DH-USB is a version of Arch Linux customized for use by digital humanists, data 
 
 ##Software Included
  - **Desktop Environment**: GNOME
- - **Programming Languages**: Python 3, R, Ruby 
+ - **Programming Languages**: Python 3, Ruby 
+ - **IDEs**: Jupyter, Jupyter Notebook, iPython
  - **Text Editors**: Vim, Gedit
- - **IDEs**: Jupyter, Jupyter Notebooks, iPython, R-Studio
  - **Web Browsing**: Chromium (open-source Google chrome)  
  - **Web Development**: Jekyll
  - **Document management**: Pandoc, pandoc-citeproc, pandoc-crossref

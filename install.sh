@@ -15,13 +15,15 @@ sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils
 
 fonts="divehi-fonts ttf-aboriginal-sans ttf-arphic-uming ttf-baekmuk ttf-bitstream-vera ttf-dejavu ttf-freefont ttf-opensans" 
 
-desktop="gdm baobab chromium chromium-pepper-flash eog espeak evince file-roller gedit gnome-backgrounds gnome-bluetooth gnome-calculator gnome-common gnome-contacts gnome-control-center gnome-disk-utility gnome-documents gnome-keyring gnome-logs gnome-maps gnome-photos gnome-screenshot gnome-shell gnome-shell-extension-dash-to-dock gnome-shell-extension-topicons gnome-shell-extension-status-menu-buttons gnome-shell-extension-panel-osd gnome-shell-extensions gnome-sound-recorder gnome-system-monitor gnome-terminal gnome-themes-standard gnome-tweak-tool gnome-weather gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi gvfs-mtp libgnomeui libwnck3 nautilus network-manager-applet totem transmission-cli transmission-gtk arc-gtk-theme gnome-software broadcom-wl" 
+desktop="gdm baobab chromium chromium-pepper-flash eog espeak evince file-roller gedit gnome-backgrounds gnome-bluetooth gnome-calculator gnome-common gnome-contacts gnome-control-center gnome-disk-utility gnome-documents gnome-keyring gnome-logs gnome-maps gnome-photos gnome-screenshot gnome-shell gnome-shell-extension-dash-to-dock gnome-shell-extensions gnome-sound-recorder gnome-system-monitor gnome-terminal gnome-themes-standard gnome-tweak-tool gnome-weather gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi gvfs-mtp libgnomeui libwnck3 nautilus network-manager-applet totem transmission-cli transmission-gtk arc-gtk-theme gnome-software broadcom-wl" 
 
-dh="vim python ruby jupyter jupyter-notebook python-nltk pandoc pandoc-citeproc pandoc-crossref mathjax r" 
+dh="vim python python-pip ruby jupyter jupyter-notebook python-nltk pandoc pandoc-citeproc pandoc-crossref mathjax" 
 
 ruby_gems="jekyll"
 
-aur="rstudio-desktop-bin papirus-icon-theme-git zotero" 
+aur="papirus-icon-theme-git zotero" 
+
+desktop_files="jupter-notebook zotero" 
 
 function partition() { 
 	echo "Partitioning $disk!"
@@ -130,7 +132,7 @@ function files {
 	# Copy over desktop files. 
 	DEST=/home/dh-usb/.local/share/applications/
 	arch-chroot /mnt sudo -u dh-usb mkdir -p $DEST
-	for file in *.desktop
+	for file in $desktop_files
 	do 
 		cp $file /mnt$DEST
 		arch-chroot /mnt chown dh-usb:users $DEST$file
@@ -144,13 +146,22 @@ function config_post {
 
 function clean { 
 	# Remove arguably unnecessarily desktop files so that the list of applications 
+	# looks cleaner and more friendly.  
 	for file in avahi-discover bssh bvnc qv4l2
 	do 
 		rm /mnt/usr/share/applications/$file.desktop
 	done
 } 
 
+function install_r { 
+	# Must be run first if you want to install R and associated packages. 
+	dh="$dh r"
+	aur="$aur rstudio-desktop-bin" 
+	desktop_files="$desktop_files r rstudio"
+} 
+
 function all { 
+	# install_r
 	partition
 	mount 
 	install
