@@ -35,6 +35,9 @@ gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-running-dots 
 gsettings set org.gnome.shell.extensions.dash-to-dock custom-theme-shrink false
 gsettings set org.gnome.shell.extensions.dash-to-dock click-action minimize
 
+# Disable searching of potential software. 
+gsettings set org.gnome.desktop.search-providers disabled \[\'org.gnome.Software.desktop\'\]
+
 # Set favorite apps
 gsettings set org.gnome.shell favorite-apps "['org.gnome.Terminal.desktop', 'chromium.desktop', 'org.gnome.Nautilus.desktop']"
 
