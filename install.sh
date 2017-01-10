@@ -157,8 +157,8 @@ function files {
 	arch-chroot /mnt sudo -u dh-usb mkdir -p $DEST
 	for file in $desktop_files
 	do 
-		cp $file /mnt$DEST
-		arch-chroot /mnt chown dh-usb:users $DEST$file
+		cp $file.desktop /mnt$DEST
+		arch-chroot /mnt chown dh-usb:users $DEST$file.desktop
 	done
 }
 
