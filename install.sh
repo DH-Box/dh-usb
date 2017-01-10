@@ -116,7 +116,7 @@ function install_extra {
 function files { 
 	# Copy dotfiles
 	DEST=/home/dh-usb/
-	for file in xinitrc zshrc 
+	for file in xinitrc zshrc setup.sh
 	do 
 		cp $file /mnt$DEST.$file
 		arch-chroot /mnt chown dh-usb:users $DEST.$file 
@@ -143,7 +143,13 @@ function files {
 	done
 }
 
+function config_post { 
+	# Run setup script on the USB system. 
+	arch-chroot /mnt sudo -u dh-usb /home/dh-usb/.setup.sh
+} 
+
 function clean { 
+	# Remove 
 	# Remove arguably unnecessarily desktop files so that the list of applications 
 	for file in avahi-discover bssh bvnc qv4l2
 	do 
@@ -155,9 +161,10 @@ function all {
 	partition
 	mount 
 	install
-	configure
-	extra
+	config_init
+	install_extra
 	files
+	config_post
 	clean
 	unmount
 }
