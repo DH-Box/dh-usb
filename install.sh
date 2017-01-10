@@ -24,6 +24,7 @@ ruby_gems="jekyll"
 aur="rstudio-desktop-bin papirus-icon-theme-git zotero" 
 
 function partition() { 
+	echo "Partitioning $disk!"
 	parted $disk mktable gpt
 	parted $disk mkpart primary fat32 1MiB 513MiB
 	parted $disk set 1 boot on
@@ -33,22 +34,26 @@ function partition() {
 }
 
 function mount { 
+	echo "Mounting $disk"
 	/usr/sbin/mount "$disk"2 /mnt 
 	mkdir -p /mnt/boot 
 	/usr/sbin/mount "$disk"1 /mnt/boot
 } 
 
 function unmount { 
+	echo "Unmounting $disk"
 	umount /mnt/boot
 	umount /mnt
 } 
 
 function install { 
+	echo "Installing system." 
 	pacstrap /mnt base base-devel
 	pacstrap /mnt $sys $fonts $desktop $dh
 }
 
-function configure { 
+function config_init { 
+	echo "Starting initial configuration of system." 
 	arch-chroot /mnt ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 
 	# Copy /etc files
@@ -79,14 +84,9 @@ function configure {
 	arch-chroot /mnt systemctl enable NetworkManager
 }
 
-function themes { 
-	# Set themes
-	arch-chroot /mnt sudo -u dh-usb gsettings set org.gnome.desktop.interface gtk-theme Arc-Dark
-	arch-chroot /mnt sudo -u dh-usb gsettings set org.gnome.desktop.interface icon-theme Papirus-Dark
-	arch-chroot /mnt sudo -u dh-usb gsettings set org.gnome.shell.extensions.user-theme name Arc-Dark
-} 
 
-function extra {
+function install_extra {
+	echo "Installing extra packages from the AUR" 
 	# Install packages from AUR
 	# It'd be great if this worked with `yaourt`,  but there are permissions
 	# issues. 
@@ -101,11 +101,13 @@ function extra {
 		arch-chroot /mnt pacman -U --noconfirm /home/dh-usb/$pkgfile
 
 		#Clean up
+		cd $dir
 		rm -rf /tmp/$package
 		arch-chroot /mnt rm -rf /home/dh-usb/$pkgfile
 	done
 
 	# Install Ruby gems
+	echo "Installing Ruby gems." 
 	arch-chroot /mnt sudo -u dh-usb gem install -u $ruby_gems
 
 	# TODO: Install Python modules
