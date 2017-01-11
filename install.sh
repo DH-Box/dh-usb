@@ -86,8 +86,8 @@ function config_init {
 	arch-chroot /mnt mkinitcpio -p linux
 
 	# Install bootloader
-	arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
-	arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+	#arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+	#arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
 
 	# Add default user
 	arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
