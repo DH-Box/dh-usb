@@ -11,6 +11,20 @@ DH-USB is an opinionated adaptation of Arch Linux, customized for use by digital
  - **Document management**: Pandoc, pandoc-citeproc, pandoc-crossref
  - **Bibliographic Management**: Zotero
 
+##FAQ
+
+###Why Arch Linux? Why not something more user-friendly, like Ubuntu? 
+
+Arch is rolling-release, which means that it always has the lastest software. Ubuntu freezes its software versions every six months, and in some cases has very old software. 
+
+Python 3 is also the default on Arch, while Ubuntu still uses Python 2. 
+
+###Is this a live USB? Where can I download an ISO? 
+
+This isn’t a live USB, like most distributions you can download. It’s actually a full Linux install. A live USB would freeze the kernel and other system files to a particular release, but this is identical to an install you would have on your hard drive. 
+
+###
+
 #Warning
 This is a work-in-progress! Please do not use these scripts unless you know what you’re doing. 
 
