@@ -59,6 +59,14 @@ function unmount {
 	umount /mnt
 } 
 
+function install_r { 
+	# Optional, for installing the R language and R-Studio. 
+	# Must be run before main installation. 
+	dh="$dh r"
+	aur="$aur rstudio-desktop-bin" 
+	desktop_files="$desktop_files r rstudio"
+} 
+
 function install { 
 	echo "Installing system." 
 	pacstrap /mnt base base-devel
@@ -178,9 +186,9 @@ function clean {
 } 
 
 function all { 
-	# install_r
 	partition
 	mount 
+	# install_r
 	install
 	config_init
 	install_extra
