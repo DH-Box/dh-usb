@@ -1,5 +1,5 @@
 #About
-DH-USB is a version of Arch Linux customized for use by digital humanists, data scientists, corpus linguists, and anyone else that works with text as data. This script will install DH-USB persistently to your USB drive, allowing you to run the operating system directly from the disk. The storage available to your system is limited only by the size of your USB drive. 
+DH-USB is an opinionated adaptation of Arch Linux, customized for use by digital humanists, data scientists, corpus linguists, and anyone else that works with text as data. This script will install DH-USB persistently to your USB drive, allowing you to run the operating system directly from the disk. The storage available to your system is limited only by the size of your USB drive. 
 
 ##Software Included
  - **Desktop Environment**: GNOME
@@ -20,7 +20,8 @@ For this script to work, you must have:
  - a large USB drive, maybe over 10GB. This hasn’t been tested with anything but a 32GB drive
  - a modern x86_64 system that supports UEFI. Legacy boot may be possible, but it hasn’t been tested. 
  - Antergos Linux, or Arch Linux with the Antergos repositories in /etc/pacman.conf 
- - the Arch Linux package arch-install-scripts
+ - the Arch Linux package `arch-install-scripts`
+ - for this to boot on a Mac, we also need the Arch package `hfsprogs` and the AUR package `mactel-boot`. 
 
 #Usage
 Figure out what device label your USB drive has with `sudo fdisk -l`. If it’s `/dev/sdb`, you don’t need to configure anything, but if it’s something else, like `/dev/sdc`, you’ll need to edit the script first. Once you’re absolutely sure that your disk label is correct, you can run this command, which will erase and partition your disk, install Arch and all the other software, and configure everything: 
