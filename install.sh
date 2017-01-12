@@ -69,7 +69,7 @@ function install_r {
 function install { 
 	echo "Installing system." 
 	pacstrap /mnt base base-devel
-	pacstrap /mnt $sys # $fonts $desktop $dh
+	pacstrap /mnt $sys $fonts $desktop $dh
 }
 
 function config_init { 
