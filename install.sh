@@ -29,12 +29,19 @@ desktop_files="jupyter-notebook zotero"
 
 function partition() { 
 	echo "Partitioning $disk!"
+
+	# Make a GPT partition table for the disk. 
 	parted $disk mktable gpt
+
+	# Make an EFI boot partition. 
 	parted $disk mkpart primary fat32 1MiB 513MiB
 	parted $disk set 1 boot on
+
+	# Make the main partition
 	parted $disk mkpart primary ext4 513MiB 100%
+	parted $disk name 2 dh-usb
 	# Disable journaling to lengthen life of USB disk by minimizing writes. 
-	mkfs.ext4 -O "^has_journal" "$disk"2
+	mkfs.ext4 -O "^has_journal" "$disk"2 -L dh-usb
 	mkfs.fat -F32 "$disk"1
 }
 
@@ -85,16 +92,27 @@ function config_init {
 	# Generate boot image
 	arch-chroot /mnt mkinitcpio -p linux
 
-	# Install bootloader
-	#arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
-	#arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
-
 	# Add default user
 	arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
 
 	# Start services
 	arch-chroot /mnt systemctl enable gdm
 	arch-chroot /mnt systemctl enable NetworkManager
+
+	# Install bootloader
+	#arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
+	#arch-chroot /mnt grub-mkconfig -o /boot/grub/grub.cfg
+
+	# Install systemd-boot
+	arch-chroot /mnt bootctl --path=/boot install
+
+	# Copy systemd-boot config
+	cp loader.conf /mnt/boot/loader/
+	cp arch.conf /mnt/boot/loader/entries/
+	arch-chroot /mnt chown root:root /boot/loader/loader.conf
+	arch-chroot /mnt chown root:root /boot/loader/entries/arch.conf 
+	arch-chroot /mnt chmod +x /boot/loader/loader.conf
+	arch-chroot /mnt chmod +x /boot/loader/entries/arch.conf
 }
 
 
