@@ -7,7 +7,24 @@
 set -e 
 
 # Enter the label for your USB drive here. 
-disk=/dev/sdb
+disk=/dev/loop0
+
+# If writing to an .img file, this is the size of the file
+# to be created. 
+# size=14G # small image
+size=28G # big image
+
+name=dh-usb-0-2-0
+
+if [ "$disk" = "/dev/loop0" ] 
+then 
+	# Loopback devices have different partition syntax.
+	part1="$disk"p1
+	part2="$disk"p2
+else
+	part1="$disk"1
+	part2="$disk"2
+fi
 
 dir=$PWD
 
@@ -28,6 +45,13 @@ aur="papirus-icon-theme-git zotero"
 desktop_files="jupyter-notebook zotero" 
 
 function partition() { 
+	if [ "$disk" = "/dev/loop0" ]
+	then 
+		echo "Creating disk image." 
+		fallocate -l $size disk.img
+		losetup /dev/loop0 disk.img
+	fi
+
 	echo "Partitioning $disk!"
 
 	# Make a GPT partition table for the disk. 
@@ -40,22 +64,28 @@ function partition() {
 	# Make the main partition
 	parted $disk mkpart primary ext4 513MiB 100%
 	parted $disk name 2 dh-usb
+
+	mkfs.fat -F32 $part1
 	# Disable journaling to lengthen life of USB disk by minimizing writes. 
-	mkfs.ext4 -O "^has_journal" "$disk"2 -L dh-usb
-	mkfs.fat -F32 "$disk"1
+	mkfs.ext4 -O "^has_journal" $part2 -L dh-usb
 }
 
 function mount { 
 	echo "Mounting $disk"
-	/usr/sbin/mount "$disk"2 /mnt 
+	/usr/sbin/mount $part2 /mnt 
 	mkdir -p /mnt/boot 
-	/usr/sbin/mount "$disk"1 /mnt/boot
+	/usr/sbin/mount $part1 /mnt/boot
 } 
 
 function unmount { 
 	echo "Unmounting $disk"
 	umount /mnt/boot
 	umount /mnt
+
+	if [ "$disk" = "/dev/loop0" ]
+	then 
+		losetup -d /dev/loop0
+	fi
 } 
 
 function install_r { 
@@ -195,6 +225,23 @@ function clean {
 	done
 } 
 
+function package { 
+	# Renames the resulting disk.img, bundles the installation
+	# README, and compresses the result into a .zip file for distribution
+	# over the Internet. 
+	echo "Zipping .img file." 
+	if [ $size == "28G" ] 
+	then 
+		name=$name-32G
+	else
+		name=$name-16G
+	fi
+	mkdir -p $name
+	cp README-installation.md $name/README.md
+	mv disk.img $name/$name.img
+	zip -r $name.zip $name/ 
+} 
+
 function all { 
 	partition
 	mount 
@@ -202,7 +249,7 @@ function all {
 	install
 	config_init
 	install_extra
-	# install_big
+	install_big
 	files
 	config_post
 	clean
