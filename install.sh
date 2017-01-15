@@ -109,7 +109,7 @@ function config_init {
 	# Copy /etc files
 	for file in locale.gen locale.conf hostname fstab makepkg.conf
 	do
-		cp $file /mnt/etc/$file
+		cp config/$file /mnt/etc/$file
 		arch-chroot /mnt chown root:root /etc/$file
 	done
 		
@@ -137,8 +137,8 @@ function config_init {
 	arch-chroot /mnt bootctl --path=/boot install
 
 	# Copy systemd-boot config
-	cp loader.conf /mnt/boot/loader/
-	cp arch.conf /mnt/boot/loader/entries/
+	cp config/loader.conf /mnt/boot/loader/
+	cp config/arch.conf /mnt/boot/loader/entries/
 	arch-chroot /mnt chown root:root /boot/loader/loader.conf
 	arch-chroot /mnt chown root:root /boot/loader/entries/arch.conf 
 	arch-chroot /mnt chmod +x /boot/loader/loader.conf
@@ -192,12 +192,12 @@ function files {
 	DEST=/home/dh-usb/
 	for file in xinitrc zshrc setup.sh
 	do 
-		cp $file /mnt$DEST.$file
+		cp config/$file /mnt$DEST.$file
 		arch-chroot /mnt chown dh-usb:users $DEST.$file 
 	done
 
 	# Give members of group Wheel access to sudo. 
-	cp sudo /mnt/etc/sudoers.d/wheel
+	cp config/sudo /mnt/etc/sudoers.d/wheel
 	arch-chroot /mnt chown root:root /etc/sudoers.d/wheel
 	arch-chroot /mnt chmod -c 0440 /etc/sudoers.d/wheel
 
@@ -206,7 +206,7 @@ function files {
 	arch-chroot /mnt sudo -u dh-usb mkdir -p $DEST
 	for file in $desktop_files
 	do 
-		cp $file.desktop /mnt$DEST
+		cp config/$file.desktop /mnt$DEST
 		arch-chroot /mnt chown dh-usb:users $DEST$file.desktop
 	done
 }
