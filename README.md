@@ -40,7 +40,7 @@ Detailed installation instructions are included in [README-installation.md](http
 
 This isn’t a live USB, like most Linux distributions you can download; it’s actually a full Linux install. Live USBs run on read-only filesystems that freeze the kernel and other system files to a particular state, but DH-USB is identical to a full install you would have on your hard drive.
 
-##I’ve created a USB disk with DH-USB on it. Now how do I boot from it? 
+###I’ve created a USB disk with DH-USB on it. Now how do I boot from it? 
 
 This depends on your system. On a PC, you typically press some key on boot time, like F10, and this will bring up a boot menu where you can opt to boot from the USB. Check your computer’s documentation for the correct key to press. On a Mac, you have to hold down Option (Alt) while booting, and then select “EFI Boot” when prompted.
 
