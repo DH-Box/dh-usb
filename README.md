@@ -1,6 +1,10 @@
 #About
 DH-USB is a [digital humanities](https://en.wikipedia.org/wiki/Digital_humanities) operating system on a USB disk. It’s an opinionated adaptation of Arch Linux, customized for use by digital humanists, text analysts, data scientists, corpus linguists, and anyone else that works with text as data. Download the USB image files over BitTorrent using [the .torrent files in the /torrents directory](https://github.com/JonathanReeve/dh-usb/tree/master/torrents). 
 
+![Screenshot: Apps](screenshots/ss-apps.png)
+![Screenshot: Desktop](screenshots/ss-desktop.png)
+![Screenshot: Windows](screenshots/ss-windows.png)
+
 ##Software Included
  - **Desktop Environment**: GNOME
  - **Programming Languages**: Python 3, Ruby 
