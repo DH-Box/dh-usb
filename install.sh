@@ -14,7 +14,7 @@ disk=/dev/sdb
 # size=14G # small image
 size=28G # big image
 
-name=dh-usb-0-2-0
+name=dh-usb-0-2-1
 
 if [ "$disk" = "/dev/loop0" ] 
 then 
@@ -36,7 +36,7 @@ fonts="divehi-fonts ttf-aboriginal-sans ttf-arphic-uming ttf-baekmuk ttf-bitstre
 
 dh="vim python python-pip ruby jupyter jupyter-notebook python-nltk pandoc pandoc-citeproc pandoc-crossref mathjax" 
 
-hacker="gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi i3-wm i3status qutebrowser zathura wifi-menu"
+hacker="gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi i3-wm i3status qutebrowser zathura" 
 
 ruby_gems="jekyll"
 
@@ -131,7 +131,7 @@ function config_init {
 	arch-chroot /mnt mkinitcpio -p linux
 
 	# Add default user
-	#arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
+	arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
 
 	# Start services
 	if [ "$hacker_mode" != true ]
@@ -196,6 +196,14 @@ function install_big {
 
 	# Install spaCy data
 	arch-chroot /mnt python -m spacy.en.download all
+
+	# Install textacy
+	# Textacy needs cld2-cffi, but that won't compile with GCC 6, so 
+	# we have to supply a special CFLAGS argument. See 
+	# https://github.com/GregBowyer/cld2-cffi/issues/12
+	# for the status on this bug. 
+	arch-chroot /mnt CFLAGS="-Wno-narrowing" pip install -U cld2-cffi
+	arch-chroot /mnt pip install textacy
 } 
 
 function files { 
@@ -254,12 +262,12 @@ function package {
 } 
 
 function min { 
+	export size=14G
 	partition
 	mount 
 	install
 	config_init
 	install_extra
-	#install_big
 	files
 	config_post
 	clean
@@ -267,6 +275,7 @@ function min {
 }
 
 function big { 
+	export size=28G
 	partition
 	mount 
 	install
