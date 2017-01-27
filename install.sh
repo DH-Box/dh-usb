@@ -7,7 +7,7 @@
 set -e 
 
 # Enter the label for your USB drive here. 
-disk=/dev/loop0
+disk=/dev/sdb
 
 # If writing to an .img file, this is the size of the file
 # to be created. 
@@ -28,13 +28,15 @@ fi
 
 dir=$PWD
 
-sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub efibootmgr nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools hfsprogs gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-server-utils xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot" 
+sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub efibootmgr nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools hfsprogs gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-server-utils xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot broadcom-wl" 
 
-desktop="gdm baobab chromium chromium-pepper-flash eog espeak evince file-roller gedit gnome-backgrounds gnome-bluetooth gnome-calculator gnome-common gnome-contacts gnome-control-center gnome-disk-utility gnome-documents gnome-keyring gnome-logs gnome-maps gnome-photos gnome-screenshot gnome-shell gnome-shell-extension-dash-to-dock gnome-shell-extensions gnome-sound-recorder gnome-system-monitor gnome-terminal gnome-themes-standard gnome-tweak-tool gnome-weather gnome-boxes gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi gvfs-mtp libgnomeui libwnck3 nautilus network-manager-applet totem transmission-cli transmission-gtk arc-gtk-theme gnome-software broadcom-wl" 
+desktop="gdm baobab chromium chromium-pepper-flash eog espeak evince file-roller gedit gnome-backgrounds gnome-bluetooth gnome-calculator gnome-common gnome-contacts gnome-control-center gnome-disk-utility gnome-documents gnome-keyring gnome-logs gnome-maps gnome-photos gnome-screenshot gnome-shell gnome-shell-extension-dash-to-dock gnome-shell-extensions gnome-sound-recorder gnome-system-monitor gnome-terminal gnome-themes-standard gnome-tweak-tool gnome-weather gnome-boxes gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi gvfs-mtp libgnomeui libwnck3 nautilus network-manager-applet totem transmission-cli transmission-gtk arc-gtk-theme gnome-software" 
 
 fonts="divehi-fonts ttf-aboriginal-sans ttf-arphic-uming ttf-baekmuk ttf-bitstream-vera ttf-dejavu ttf-freefont ttf-opensans" 
 
 dh="vim python python-pip ruby jupyter jupyter-notebook python-nltk pandoc pandoc-citeproc pandoc-crossref mathjax" 
+
+hacker="gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer0.10-plugins gstreamer-vaapi i3-wm i3status qutebrowser zathura wifi-menu"
 
 ruby_gems="jekyll"
 
@@ -102,6 +104,12 @@ function install {
 	pacstrap /mnt $sys $fonts $desktop $dh
 }
 
+function install_hacker { 
+	echo "Installing hacker-mode system." 
+	pacstrap /mnt base base-devel
+	pacstrap /mnt $sys $fonts $hacker $dh
+}
+
 function config_init { 
 	echo "Starting initial configuration of system." 
 	#arch-chroot /mnt ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
@@ -123,11 +131,14 @@ function config_init {
 	arch-chroot /mnt mkinitcpio -p linux
 
 	# Add default user
-	arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
+	#arch-chroot /mnt useradd -m -p "" -g users -G "adm,audio,floppy,log,network,rfkill,scanner,storage,optical,power,wheel" -s /usr/bin/zsh dh-usb
 
 	# Start services
-	arch-chroot /mnt systemctl enable gdm
-	arch-chroot /mnt systemctl enable NetworkManager
+	if [ "$hacker_mode" != true ]
+	then 
+		arch-chroot /mnt systemctl enable gdm
+		arch-chroot /mnt systemctl enable NetworkManager
+	fi
 
 	# Install bootloader
 	#arch-chroot /mnt grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub
@@ -242,10 +253,22 @@ function package {
 	zip -r $name.zip $name/ 
 } 
 
-function all { 
+function min { 
 	partition
 	mount 
-	# install_r
+	install
+	config_init
+	install_extra
+	#install_big
+	files
+	config_post
+	clean
+	unmount
+}
+
+function big { 
+	partition
+	mount 
 	install
 	config_init
 	install_extra
@@ -253,6 +276,18 @@ function all {
 	files
 	config_post
 	clean
+	unmount
+}
+
+function hacker { 
+	export hacker_mode=true
+	partition
+	mount 
+	install_hacker
+	config_init
+	install_extra
+	install_big
+	files
 	unmount
 }
 

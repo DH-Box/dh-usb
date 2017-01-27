@@ -84,9 +84,9 @@ If you’re a DIY kind of person, and you’d like to build DH-USB from scratch,
 ##Usage
 Figure out what device label your USB drive has with `sudo fdisk -l`. If it’s `/dev/sdb`, you don’t need to configure anything, but if it’s something else, like `/dev/sdc`, you’ll need to edit the script first. Once you’re absolutely sure that your disk label is correct, you can run this command, which will erase and partition your disk, install Arch and all the other software, and configure everything: 
 
-    sudo ./install.sh all
+    sudo ./install.sh big
 
-If you just want to perform one of those tasks, run something like
+If you just want the minimal OS, run `min` instead of `big`. For Hacker Mode, run `hacker`. To perform a subtask, run something like
 
     sudo ./install.sh files
 
