@@ -58,7 +58,7 @@ Arch is rolling-release, which means that it always has the latest software. In 
 
 ###What about R? 
 
-I’ve removed the R programming language by default, despite its widespread use in text analysis, but it is easily installable with the command `sudo pacman -S R`. Similarly, you can install R-Studio with `yaourt install rstudio-desktop-bin`. 
+I’ve removed the R programming language by default, despite its widespread use in text analysis, but it is easily installable with the Software app, or on the commandline via `sudo pacman -S r`. Similarly, you can install R-Studio with `yaourt install rstudio-desktop-bin`. 
 
 ###What about Omeka, WordPress, or other digital humanities tools? 
 
@@ -68,7 +68,7 @@ I’ve left cloud-based software off of DH-USB, for the moment, since DH-USB is 
 
 Absolutely. Just use the program called “Software,” or run the command `sudo pacman -S package-name-here`, substituting the name of the software package you want to install.
 
-###How can I customize DH-USB, and make it my own?
+###How can I personalize DH-USB?
 
 First, you’ll probably want to change the root password as soon as you can, either through the Users program or on the command line, with `passwd`. With the Users program, you can also change your profile picture. Use the Online Accounts program to enter your Google or other account information, which will ensure integration with all of GNOME’s apps. 
 
@@ -78,7 +78,7 @@ If you’re a DIY kind of person, and you’d like to build DH-USB from scratch,
 
  - a large USB drive, at least 16GB
  - a modern system that supports UEFI. Legacy BIOS boot may be possible, but it hasn’t been extensively tested.
- - Antergos Linux (which is really just Arch Linux with the Antergos repositories in /etc/pacman.conf)
+ - Antergos Linux (or Arch Linux with the Antergos repositories in /etc/pacman.conf)
  - the Arch Linux package `arch-install-scripts`
 
 ##Usage
