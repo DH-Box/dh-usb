@@ -112,7 +112,7 @@ function install_hacker {
 
 function config_init { 
 	echo "Starting initial configuration of system." 
-	arch-chroot /mnt ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
+	#arch-chroot /mnt ln -s /usr/share/zoneinfo/America/New_York /etc/localtime
 
 	# Copy /etc files
 	for file in locale.gen locale.conf hostname fstab makepkg.conf
