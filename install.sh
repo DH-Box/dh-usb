@@ -7,14 +7,15 @@
 set -e 
 
 # Enter the label for your USB drive here. 
-disk=/dev/sdb
+#disk=/dev/sdb
+disk=/dev/loop0
 
 # If writing to an .img file, this is the size of the file
 # to be created. 
 # size=14G # small image
 size=28G # big image
 
-name=dh-usb-0-2-1
+name=dh-usb-0-2-2
 
 if [ "$disk" = "/dev/loop0" ] 
 then 
@@ -28,7 +29,7 @@ fi
 
 dir=$PWD
 
-sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub efibootmgr nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools hfsprogs gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-server-utils xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot broadcom-wl" 
+sys="crda dialog gpm grml-zsh-config linux-atm lsscsi mc mtools ndisc6 nfs-utils grub efibootmgr nilfs-utils ntp rp-pppoe sg3_utils smartmontools speedtouch wvdial xl2tpd hdparm gptfdisk exfat-utils dmraid dosfstools hfsprogs gnu-netcat sdparm refind-efi f2fs-tools ntfs-3g testdisk partclone fsarchiver btrfs-progs parted ddrescue partimage wireless_tools wpa_actiond vpnc ppp pptpclient openconnect openssh openvpn dnsmasq dnsutils tcpdump lftp darkhttpd dhclient ethtool b43-fwcutter ipw2100-fw ipw2200-fw zd1211-firmware rsync rfkill usb_modeswitch mesa mesa-vdpau xf86-input-synaptics xf86-video-ati xf86-video-fbdev xf86-video-intel xf86-video-nouveau xf86-video-openchrome xf86-video-vesa xf86-video-vmware xorg-server xorg-xinit xorg-xauth alsa-utils expect git pkgfile powerpill reflector sudo unzip unrar wget xdg-user-dirs-gtk yaourt fakeroot broadcom-wl" 
 
 desktop="gdm baobab chromium chromium-pepper-flash eog espeak evince file-roller gedit gnome-backgrounds gnome-bluetooth gnome-calculator gnome-common gnome-contacts gnome-control-center gnome-disk-utility gnome-documents gnome-keyring gnome-logs gnome-maps gnome-photos gnome-screenshot gnome-shell gnome-shell-extension-dash-to-dock gnome-shell-extensions gnome-sound-recorder gnome-system-monitor gnome-terminal gnome-themes-standard gnome-tweak-tool gnome-weather gnome-boxes gst-libav gst-plugins-bad gst-plugins-base gst-plugins-good gst-plugins-ugly gstreamer-vaapi gvfs-mtp libwnck3 nautilus networkmanager network-manager-applet totem transmission-cli transmission-gtk arc-gtk-theme gnome-software" 
 
